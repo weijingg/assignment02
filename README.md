@@ -216,6 +216,12 @@ There are several datasets that are prescribed for you to use in this part. Belo
 
     **Description:**
 
+    1. Using the wheelchair_boarding column in septa.bus_stops, if the value is 0 and the stop has a parent station, the value is replaced with that of the parent station to account for inherited values. 
+    2. If the value is 0 and there is no parent station, the bus stop is excluded from analysis due to missing information. 
+    3. If the value is 1 or 2 (wheelchair accessible and inaccessible respectively), the original value is retained.
+    4. To calculate the accessibility metric, sum the number of wheelchair accessible bus stops and divide it by the area of the neighborhood. The area is taken into account because neighborhoods with few bus stops serving a large area could be considered less friendly for wheelchairs, even if the bus stops themselves are wheelchair accessible.
+    5. The score is normalised to obtain a range of 0 to 1, with 1 being the most accessible. 
+
 6.  What are the _top five_ neighborhoods according to your accessibility metric?
 
 7.  What are the _bottom five_ neighborhoods according to your accessibility metric?
@@ -240,6 +246,10 @@ There are several datasets that are prescribed for you to use in this part. Belo
     ```
 
     **Discussion:**
+
+    1. I chose the PWD parcels dataset, using string comparison to identify parcels under Penn's ownership, such as "TRUSTEES OF THE UNIVERSIT" and "THE UNIVERSITY OF PENNA". 
+    2. Only polygons within 10m of one another are retained to narrow down to the main campus. 
+    3. Only block groups that are at least 20% covered by the parcel polygons are counted. 20% was chosen as the threshold because the strings identified in step 1 is likely not an exhaustive list. 
 
 9. With a query involving PWD parcels and census block groups, find the `geo_id` of the block group that contains Meyerson Hall. `ST_MakePoint()` and functions like that are not allowed.
 
